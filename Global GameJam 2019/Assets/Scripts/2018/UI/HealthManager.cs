@@ -11,6 +11,11 @@ namespace Assets.Scripts._2018.UI
 
         public void Start()
         {
+            if (HealthObjects == null)
+            {
+                Debug.Log("NO HEALTH OBJECTS");
+                return;
+            }
             foreach (var healthObject in HealthObjects)
             {
                 healthObject.Value.OnHealthDrained += HealthDrained;
