@@ -6,6 +6,7 @@ namespace Assets.Scripts._2018.UI
 {
     public class HealthManager : MonoBehaviour
     {
+        [SerializeField]
         public Dictionary<HealthObjectType, Health> HealthObjects;
 
         public void Start()
