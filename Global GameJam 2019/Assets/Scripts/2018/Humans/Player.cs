@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public enum Direction
 {
-  Left, Right
+    Left, Right
 }
 
 [RequireComponent(typeof(Animator))]
@@ -17,66 +17,66 @@ public class Player : MonoBehaviour, IMovable
     public Direction direction;
     public GameObject PowerUp;
     public GameObject SkillPrefab;
-    
+
 
     private HealthManager _healthManager { get; set; }
 
     [SerializeField]
-  private float _speed;
-  public float Speed { get { return _speed; } set { _speed = value; } }
+    private float _speed;
+    public float Speed { get { return _speed; } set { _speed = value; } }
 
 
-  private new Rigidbody2D rigidbody;
-  private Animator animator;
+    private new Rigidbody2D rigidbody;
+    private Animator animator;
 
-  public GameObject Mama = null;
-  private bool shotgun;
+    public GameObject Mama = null;
+    private bool shotgun;
 
-  public bool canShoot = true;
-  public float activeTime = 0.025f;
+    public bool canShoot = true;
+    public float activeTime = 0.025f;
 
-  public void Shoot()
-  {
-    if (SkillPrefab != null && canShoot)
+    public void Shoot()
     {
-      if (shotgun)
-      {
-        var spread = 0.25f;
-        // Middle
-        GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
-        Skill skillScript = actualProjectile.GetComponent<Skill>();
-        skillScript.direction = this.direction;
+        if (SkillPrefab != null && canShoot)
+        {
+            if (shotgun)
+            {
+                var spread = 0.25f;
+                // Middle
+                GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
+                Skill skillScript = actualProjectile.GetComponent<Skill>();
+                skillScript.direction = this.direction;
 
-        // Top
-        var upPosition = transform.position;
-        upPosition.y += spread;
-        actualProjectile = Instantiate(SkillPrefab, upPosition, transform.rotation);
-        skillScript = actualProjectile.GetComponent<Skill>();
-        skillScript.direction = this.direction;
+                // Top
+                var upPosition = transform.position;
+                upPosition.y += spread;
+                actualProjectile = Instantiate(SkillPrefab, upPosition, transform.rotation);
+                skillScript = actualProjectile.GetComponent<Skill>();
+                skillScript.direction = this.direction;
 
-        // Bottom
-        var bottomPosition = transform.position;
-        bottomPosition.y -= spread;
-        actualProjectile = Instantiate(SkillPrefab, bottomPosition, transform.rotation);
-        skillScript = actualProjectile.GetComponent<Skill>();
-        skillScript.direction = this.direction;
-      }
-      else
-      {
-        GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
-        Skill skillScript = actualProjectile.GetComponent<Skill>();
-        skillScript.direction = this.direction;
-      }
-      canShoot = false;
-      StartCoroutine(ActivateAgain());
+                // Bottom
+                var bottomPosition = transform.position;
+                bottomPosition.y -= spread;
+                actualProjectile = Instantiate(SkillPrefab, bottomPosition, transform.rotation);
+                skillScript = actualProjectile.GetComponent<Skill>();
+                skillScript.direction = this.direction;
+            }
+            else
+            {
+                GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
+                Skill skillScript = actualProjectile.GetComponent<Skill>();
+                skillScript.direction = this.direction;
+            }
+            canShoot = false;
+            StartCoroutine(ActivateAgain());
+        }
     }
-  }
 
-  public IEnumerator ActivateAgain()
-  {
-    yield return new WaitForSeconds(activeTime);
-    canShoot = true;
-  }
+    public IEnumerator ActivateAgain()
+    {
+        yield return new WaitForSeconds(activeTime);
+        canShoot = true;
+    }
 
 
   private void Start()
@@ -88,93 +88,95 @@ public class Player : MonoBehaviour, IMovable
   }
 
 
-  private void Update()
-  {
-    Move();
-    CheckForShooting();
-  }
-
-  private void CheckForShooting()
-  {
-    if (Input.GetKeyDown("space") || Input.GetKeyDown("x"))
+    private void Update()
     {
-      Shoot();
+        Move();
+        CheckForShooting();
     }
-  }
 
-  public void Move()
-  {
+    private void CheckForShooting()
+    {
+        if (Input.GetKeyDown("space") || Input.GetKeyDown("x"))
+        {
+            Shoot();
+        }
+    }
+
+    public void Move()
+    {
         var verticalSpeed = Input.GetAxis("Vertical");
         var horizontalSpeed = Input.GetAxis("Horizontal");
 
-    if (verticalSpeed > 0 || verticalSpeed < 0)
-    {
-      // TODO: animator.SetBool("Walking", true);
-    }
-    if (verticalSpeed == 0)
-    {
-      // TODO: animator.SetBool("Walking", false);
+        if (verticalSpeed > 0 || verticalSpeed < 0)
+        {
+            // TODO: animator.SetBool("Walking", true);
+        }
+        if (verticalSpeed == 0)
+        {
+            // TODO: animator.SetBool("Walking", false);
+        }
+
+        if (horizontalSpeed > 0)
+        {
+            // TODO: animator.SetBool("Walking", true);
+            FlipRight();
+        }
+        if (horizontalSpeed < 0)
+        {
+            // TODO: animator.SetBool("Walking", true);
+            FlipLeft();
+        }
+        if (horizontalSpeed == 0)
+        {
+            // TODO: animator.SetBool("Walking", false);
+        }
+        rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
     }
 
-    if (horizontalSpeed > 0)
+    private void FlipLeft()
     {
-      // TODO: animator.SetBool("Walking", true);
-      FlipRight();
+        direction = Direction.Left;
+        GetComponent<SpriteRenderer>().flipX = false;
     }
-    if (horizontalSpeed < 0)
+
+    private void FlipRight()
     {
-      // TODO: animator.SetBool("Walking", true);
-      FlipLeft();
+        direction = Direction.Right;
+        GetComponent<SpriteRenderer>().flipX = true;
     }
-    if (horizontalSpeed == 0)
+
+    void OnCollisionEnter2D(Collision2D other)
     {
-      // TODO: animator.SetBool("Walking", false);
+        if (other.gameObject.tag == "Mama")
+        {
+            // TODO: Animation/sound
+            Destroy(gameObject);
+            GameObject.Find("Main Camera").GetComponent<LevelManager>().GameLose();
+        }
+    }
+
+    public void DecreaseHP()
+    {
+        _healthManager.DealDamage(HealthObjectType.Health, 1);
     }
     rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
   }
 
-  private void FlipLeft()
-  {
-    direction = Direction.Left;
-    GetComponent<SpriteRenderer>().flipX = false;
-  }
-
-  private void FlipRight()
-  {
-    direction = Direction.Right;
-    GetComponent<SpriteRenderer>().flipX = true;
-  }
-
-  void OnCollisionEnter2D(Collision2D other)
-  {
-    if (other.gameObject.tag == "Mama")
+    public void IncreaseHP(int count)
     {
-      // TODO: Animation/sound
-      Destroy(gameObject);
-      GameObject.Find("Main Camera").GetComponent<LevelManager>().GameLose();
-    }
-  }
-
-  public void DecreaseHP()
-  {
-        _healthManager.DealDamage(HealthObjectType.Health, 1);
-  }
-
-  public void IncreaseHP(int count)
-  {
-      _healthManager.AddHealth(HealthObjectType.Health, 1);
+        _healthManager.AddHealth(HealthObjectType.Health, 1);
     }
 
     public void GiveShotgun()
-  {
-    shotgun = true;
-  }
+    {
+        shotgun = true;
+    }
 
-  public void GiveSkill(GameObject newSkill)
-  {
-    SkillPrefab = newSkill;
-    GameObject.Find("JumpButton").GetComponent<Image>().sprite =
-        newSkill.GetComponent<Skill>().UISprite;
-  }
+    public void GiveSkill(GameObject newSkill)
+    {
+        SkillPrefab = newSkill;
+        GameObject.Find("JumpButton").GetComponent<Image>().sprite =
+            newSkill.GetComponent<Skill>().UISprite;
+    }
 }
 
