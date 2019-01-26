@@ -45,7 +45,7 @@ namespace Assets.Scripts._2018.UI
         {
             if (HealthSlider)
             {
-                HealthSlider.value = _hp / (float)HpMax;
+                HealthSlider.value = GetPercentage();
             }
         }
 
@@ -57,6 +57,11 @@ namespace Assets.Scripts._2018.UI
             }
 
             Draw();
+        }
+
+        public float GetPercentage()
+        {
+            return (_hp / (float)HpMax) * 100;
         }
     }
 }

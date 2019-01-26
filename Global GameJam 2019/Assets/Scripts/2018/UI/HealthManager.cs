@@ -55,5 +55,10 @@ namespace Assets.Scripts._2018.UI
         {
             HealthObjects[type].AddHealth(amount);
         }
+
+        public float GetPercentage(HealthObjectType type)
+        {
+            return HealthObjects[type].GetPercentage();
+        }
     }
 }
