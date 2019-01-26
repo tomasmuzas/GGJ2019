@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts._2018.UI
 {
@@ -6,12 +7,21 @@ namespace Assets.Scripts._2018.UI
 
     public class Health : MonoBehaviour
     {
-        public GameObject[] HealthSprites;
-        public GameObject HealthPanel;
+        public Slider HealthSlider;
 
-        private int _hp { get; set; }
+        public HealthObjectType Type;
 
-        public int HpMax { get; set; }
+        [SerializeField]
+        private int _hp;
+
+        [SerializeField]
+        private int _hpMax;
+
+        public int HpMax
+        {
+            get => _hpMax;
+            set => _hpMax = value;
+        }
 
         public event Event OnHealthDrained;
 
@@ -33,14 +43,9 @@ namespace Assets.Scripts._2018.UI
 
         public void Draw()
         {
-            foreach (Transform child in HealthPanel.transform)
+            if (HealthSlider)
             {
-                Destroy(child.gameObject);
-            }
-
-            for (int i = 0; i < _hp; i++)
-            {
-                Instantiate(HealthSprites[i], HealthPanel.transform);
+                HealthSlider.value = _hp / (float)HpMax;
             }
         }
 

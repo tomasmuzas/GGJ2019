@@ -79,13 +79,13 @@ public class Player : MonoBehaviour, IMovable
     }
 
 
-    private void Start()
-    {
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.gravityScale = 0f;
-        //_healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
-        // TODO: animator = GetComponent<Animator>();
-    }
+  private void Start()
+  {
+    rigidbody = GetComponent<Rigidbody2D>();
+    rigidbody.gravityScale = 0f;
+    _healthManager = GameObject.Find("HealthBarManager").GetComponent<HealthManager>();
+    // TODO: animator = GetComponent<Animator>();
+  }
 
 
     private void Update()

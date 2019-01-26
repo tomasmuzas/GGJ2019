@@ -8,12 +8,27 @@ namespace Assets.Scripts._2018.UI
     {
         public void Start()
         {
+            base.Start();
             StartTicking();
         }
 
-        public float TickIntervalInSeconds { get; set; }
+        [SerializeField]
+        private float _tickIntervalInSeconds;
 
-        public int DamagePerSecond { get; set; }
+        public float TickIntervalInSeconds
+        {
+            get => _tickIntervalInSeconds;
+            set => _tickIntervalInSeconds = value;
+        }
+
+        [SerializeField]
+        private int _damagePerSecond;
+
+        public int DamagePerSecond
+        {
+            get => _damagePerSecond;
+            set => _damagePerSecond = value;
+        }
 
         public void StartTicking()
         {

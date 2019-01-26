@@ -1,29 +1,40 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts._2018.UI
 {
     public class HealthManager : MonoBehaviour
     {
-        [SerializeField]
         public Dictionary<HealthObjectType, Health> HealthObjects;
+
+        // For editor
+        public List<Health> HealthItems;
 
         public void Start()
         {
-            if (HealthObjects == null)
+            HealthObjects = new Dictionary<HealthObjectType, Health>();
+
+            foreach (var healthObject in HealthItems)
             {
-                Debug.Log("NO HEALTH OBJECTS");
-                return;
-            }
-            foreach (var healthObject in HealthObjects)
-            {
-                healthObject.Value.OnHealthDrained += HealthDrained;
+                var obj = Instantiate(healthObject);
+                obj.OnHealthDrained += HealthDrained;
+
+                // That's sad...
+                switch (obj.Type)
+                {
+                    case HealthObjectType.Food:
+                        obj.HealthSlider = GameObject.Find("Food Health Bar").GetComponentInChildren<Slider>();
+                        break;
+                }
+                HealthObjects.Add(healthObject.Type, obj);
             }
         }
 
         public void HealthDrained()
         {
+            GameObject.Find("Engine").GetComponent<Darkness>().StartDarkening();
         }
 
         public void DealDamage(HealthObjectType type, int amount)
