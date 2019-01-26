@@ -16,14 +16,11 @@ public class Buttons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Application.platform == RuntimePlatform.Android)
-        // {
-        // }
-        // else
-        // {
-        //     VerticalAxis = Input.GetAxis("Vertical");
-        //     HorizontalAxis = Input.GetAxis("Horizontal");
-        // }
+        if (Application.platform != RuntimePlatform.Android)
+        {
+            VerticalAxis = Input.GetAxis("Vertical");
+            HorizontalAxis = Input.GetAxis("Horizontal");
+        }
     }
 
     public void MoveUp()

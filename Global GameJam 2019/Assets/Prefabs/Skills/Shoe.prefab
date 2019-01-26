@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4993690288469748542}
   - component: {fileID: 5044009955278787944}
   - component: {fileID: 5056317675091164916}
-  - component: {fileID: 4909242234652527394}
+  - component: {fileID: 7439659758322772526}
   m_Layer: 10
   m_Name: Shoe
   m_TagString: Projectile
@@ -218,8 +218,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &4909242234652527394
-CapsuleCollider2D:
+--- !u!58 &7439659758322772526
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,5 +232,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.044, y: 0.027}
-  m_Direction: 0
+  serializedVersion: 2
+  m_Radius: 1.81

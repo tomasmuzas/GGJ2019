@@ -18,7 +18,8 @@ namespace Assets.Scripts._2018.UI
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.tag == "DamageDealer")
+            print("Collision happened");
+            if (collision.gameObject.tag == "Projectile")
             {
                 HealthManager.DealDamage(HealthObjectType.Health, 1);
                 GetComponent<SpriteRenderer>().sprite = States[GetCurrentSprite()];
@@ -35,7 +36,9 @@ namespace Assets.Scripts._2018.UI
 
             var percentagePerSprite = 100 / States.Length;
 
-            var index = (int)HealthManager.GetPercentage(HealthObjectType.Health) / (int)percentagePerSprite;
+            var currentPercentage = (int)HealthManager.GetPercentage(HealthObjectType.Health);
+
+            var index =  currentPercentage / (int)percentagePerSprite;
 
             return index;
 

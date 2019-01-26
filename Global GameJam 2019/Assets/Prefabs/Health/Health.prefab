@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc96130cefed5144aa0bc38e8f0bba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthSprites: []
-  HealthPanel: {fileID: 0}
+  HealthSlider: {fileID: 0}
   Type: 0
-  _hpMax: 0
+  _hp: 0
+  _hpMax: 10

@@ -61,7 +61,7 @@ namespace Assets.Scripts._2018.UI
 
         public float GetPercentage()
         {
-            return _hp / (float)HpMax;
+            return (_hp / (float)HpMax) * 100;
         }
     }
 }
