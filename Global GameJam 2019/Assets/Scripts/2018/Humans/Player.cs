@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, IMovable
     {
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.gravityScale = 0f;
-        _healthManager = GameObject.Find("HealthBarManager").GetComponent<HealthManager>();
+        _healthManager = GetComponent<HealthManager>();
         _buttons = GameObject.Find("Engine").GetComponent<Buttons>();
         // TODO: animator = GetComponent<Animator>();
     }
