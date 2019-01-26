@@ -24,7 +24,7 @@ namespace Assets.Scripts._2018.UI
             }
         }
 
-        public void HealthDrained(object caller, EventArgs args)
+        public void HealthDrained()
         {
             print("Player died!");
         }

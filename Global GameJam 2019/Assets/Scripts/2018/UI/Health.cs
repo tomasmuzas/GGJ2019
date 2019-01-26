@@ -25,7 +25,7 @@ namespace Assets.Scripts._2018.UI
             set => _hpMax = value;
         }
 
-        public event EventHandler OnHealthDrained;
+        public event Event OnHealthDrained;
 
         public void Start()
         {
@@ -37,7 +37,7 @@ namespace Assets.Scripts._2018.UI
             _hp -= amount;
             if (_hp <= 0)
             {
-                OnHealthDrained?.Invoke(this, null);
+                OnHealthDrained?.Invoke();
             }
 
             Draw();
