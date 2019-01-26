@@ -173,8 +173,12 @@ public class Player : MonoBehaviour, IMovable
     public void GiveSkill(GameObject newSkill)
     {
         SkillPrefab = newSkill;
-        GameObject.Find("JumpButton").GetComponent<Image>().sprite =
-            newSkill.GetComponent<Skill>().UISprite;
+        var powerImage = GameObject.Find("Power1Button").GetComponent<Image>();
+        powerImage.sprite = newSkill.GetComponent<Skill>().UISprite;
+        var tempColor = powerImage.color;
+        tempColor.a = 1;
+        powerImage.color = tempColor;
+
     }
 }
 
