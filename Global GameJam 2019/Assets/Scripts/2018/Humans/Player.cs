@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+
+using Assets.Scripts._2018.UI;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,18 +12,16 @@ public enum Direction
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour, IMovable, IHuman
+public class Player : MonoBehaviour, IMovable
 {
+    public Direction direction;
+    public GameObject PowerUp;
+    public GameObject SkillPrefab;
+    
 
-  public Direction direction;
-  public GameObject PowerUp;
-  public GameObject SkillPrefab;
+    private HealthManager _healthManager { get; set; }
 
-  public int MaxHP;
-
-  private int _HP;
-  public int HP { get { return _HP; } set { _HP = value; } }
-  [SerializeField]
+    [SerializeField]
   private float _speed;
   public float Speed { get { return _speed; } set { _speed = value; } }
 
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour, IMovable, IHuman
 
   public GameObject Mama = null;
   private bool shotgun;
-  public HealthBar HealthBar { get; set; }
 
   public bool canShoot = true;
   public float activeTime = 0.025f;
@@ -85,9 +83,7 @@ public class Player : MonoBehaviour, IMovable, IHuman
   {
     rigidbody = GetComponent<Rigidbody2D>();
     rigidbody.gravityScale = 0f;
-    HealthBar = GameObject.Find("HealthBarManager").GetComponent<HealthBar>();
-    HealthBar.SetHp(MaxHP);
-    HP = MaxHP;
+    _healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
     // TODO: animator = GetComponent<Animator>();
   }
 
@@ -108,10 +104,8 @@ public class Player : MonoBehaviour, IMovable, IHuman
 
   public void Move()
   {
-    float verticalSpeed;
-    float horizontalSpeed;
-    verticalSpeed = Input.GetAxis("Vertical");
-    horizontalSpeed = Input.GetAxis("Horizontal");
+        var verticalSpeed = Input.GetAxis("Vertical");
+        var horizontalSpeed = Input.GetAxis("Horizontal");
 
     if (verticalSpeed > 0 || verticalSpeed < 0)
     {
@@ -165,21 +159,15 @@ public class Player : MonoBehaviour, IMovable, IHuman
 
   public void DecreaseHP()
   {
-    HP--;
-    HealthBar.SetHp(HP);
+        _healthManager.DealDamage(HealthObjectType.Health, 1);
   }
 
-  public void IncreasHP(int count)
+  public void IncreaseHP(int count)
   {
-    HP += count;
-    if (HP > MaxHP)
-    {
-      HP = MaxHP;
+      _healthManager.AddHealth(HealthObjectType.Health, 1);
     }
-    HealthBar.SetHp(HP);
-  }
 
-  public void GiveShotgun()
+    public void GiveShotgun()
   {
     shotgun = true;
   }

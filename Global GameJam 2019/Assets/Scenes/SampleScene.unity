@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -337,12 +337,6 @@ Transform:
   m_Father: {fileID: 1292203152}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &756393201 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7980847495897784638, guid: 622809512af934490a9be17472e170fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1379742054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &756393202 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7980847495897784637, guid: 622809512af934490a9be17472e170fe,
@@ -490,15 +484,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 807620186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bc96130cefed5144aa0bc38e8f0bba5, type: 3}
+  m_Script: {fileID: 11500000, guid: ab7c46201ce17204381001c233422e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSprites:
-  - {fileID: 298807706}
-  - {fileID: 298807706}
-  - {fileID: 298807706}
-  - {fileID: 298807706}
-  healthPanel: {fileID: 756393201}
 --- !u!4 &807620188
 Transform:
   m_ObjectHideFlags: 0
