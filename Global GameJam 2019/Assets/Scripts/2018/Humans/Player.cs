@@ -159,8 +159,6 @@ public class Player : MonoBehaviour, IMovable
     {
         _healthManager.DealDamage(HealthObjectType.Health, 1);
     }
-    rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
-  }
 
     public void IncreaseHP(int count)
     {

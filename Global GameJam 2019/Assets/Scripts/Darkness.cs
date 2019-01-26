@@ -39,6 +39,7 @@ public class Darkness : MonoBehaviour
 
     public void StopDarkening()
     {
+        print("Darkening cliecked");
         CurrentDarkness = 0;
         SetDarkness();
         ItsDarkening = false;

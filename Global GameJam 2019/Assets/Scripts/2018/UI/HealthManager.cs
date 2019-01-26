@@ -26,7 +26,6 @@ namespace Assets.Scripts._2018.UI
 
         public void HealthDrained()
         {
-            print("Player died!");
         }
 
         public void DealDamage(HealthObjectType type, int amount)
