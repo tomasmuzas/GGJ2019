@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+
+using Assets.Scripts._2018.UI.Health_Draining_Strategies;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,29 +15,35 @@ namespace Assets.Scripts._2018.UI
         // For editor
         public List<Health> HealthItems;
 
+        public HealthDrainedStrategy HealthDrainedStrategy;
+
         public void Start()
         {
+            if (HealthDrainedStrategy == null)
+            {
+                throw new ArgumentException("Health Drained Strategy cannot be empty!");
+            }
+
             HealthObjects = new Dictionary<HealthObjectType, Health>();
 
             foreach (var healthObject in HealthItems)
             {
                 var obj = Instantiate(healthObject);
-                obj.OnHealthDrained += HealthDrained;
+                obj.OnHealthDrained += HealthDrainedStrategy.HealthDrained;
 
-                // That's sad...
+                // Damn that's terrible, I'm sorry:D
                 switch (obj.Type)
                 {
                     case HealthObjectType.Food:
                         obj.HealthSlider = GameObject.Find("Food Health Bar").GetComponentInChildren<Slider>();
                         break;
+                    case HealthObjectType.Alcohol:
+                        obj.HealthSlider = GameObject.Find("Alcohol Health Bar").GetComponentInChildren<Slider>();
+                        break;
                 }
+
                 HealthObjects.Add(healthObject.Type, obj);
             }
-        }
-
-        public void HealthDrained()
-        {
-            GameObject.Find("Engine").GetComponent<Darkness>().StartDarkening();
         }
 
         public void DealDamage(HealthObjectType type, int amount)
