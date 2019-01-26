@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -6,19 +7,26 @@ namespace Assets.Scripts._2018.UI
 {
     public class HealthManager : MonoBehaviour
     {
-        [SerializeField]
         public Dictionary<HealthObjectType, Health> HealthObjects;
+
+        // For editor
+        public List<Health> HealthItems;
 
         public void Start()
         {
-            foreach (var healthObject in HealthObjects)
+            HealthObjects = new Dictionary<HealthObjectType, Health>();
+
+            foreach (var healthObject in HealthItems)
             {
-                healthObject.Value.OnHealthDrained += HealthDrained;
+                var obj = Instantiate(healthObject);
+                obj.OnHealthDrained += HealthDrained;
+                HealthObjects.Add(healthObject.Type, obj);
             }
         }
 
-        public void HealthDrained()
+        public void HealthDrained(object caller, EventArgs args)
         {
+            print("Player died!");
         }
 
         public void DealDamage(HealthObjectType type, int amount)
