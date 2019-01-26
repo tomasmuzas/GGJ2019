@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts._2018.UI;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(AudioSource))]
-public class PowerUp : MonoBehaviour, IDamageDealer{
+public class PowerUp : MonoBehaviour, IDamageDealer
+{
     public bool Enabled = false;
     public double Radius;
     public int durationInSeconds;
@@ -39,10 +41,11 @@ public class PowerUp : MonoBehaviour, IDamageDealer{
     // Deal damage to pedestrians after
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Praeivis" && Enabled)
+        if (collision.gameObject.tag == "Player" && Enabled)
         {
-            Praeivis pedestrian = collision.gameObject.GetComponent<Praeivis>();
-            StartCoroutine(ExecuteAfter(tickSpeed, () => pedestrian.ReduceHealthBy(Damage)));
+            Player player = collision.gameObject.GetComponent<Player>();
+            //Damamge
+            StartCoroutine(ExecuteAfter(tickSpeed, () => player._healthManager.AddHealth(HealthObjectType.Food, 1)));
         }
     }
 

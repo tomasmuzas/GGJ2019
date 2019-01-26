@@ -18,8 +18,10 @@ public class Player : MonoBehaviour, IMovable
     public GameObject PowerUp;
     public GameObject SkillPrefab;
 
+    public Buttons _buttons { get; set; }
 
-    private HealthManager _healthManager { get; set; }
+
+    public HealthManager _healthManager { get; set; }
 
     [SerializeField]
     private float _speed;
@@ -79,13 +81,14 @@ public class Player : MonoBehaviour, IMovable
     }
 
 
-  private void Start()
-  {
-    rigidbody = GetComponent<Rigidbody2D>();
-    rigidbody.gravityScale = 0f;
-    _healthManager = GameObject.Find("HealthBarManager").GetComponent<HealthManager>();
-    // TODO: animator = GetComponent<Animator>();
-  }
+    private void Start()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.gravityScale = 0f;
+        _healthManager = GameObject.Find("HealthBarManager").GetComponent<HealthManager>();
+        _buttons = GameObject.Find("Engine").GetComponent<Buttons>();
+        // TODO: animator = GetComponent<Animator>();
+    }
 
 
     private void Update()
@@ -104,8 +107,8 @@ public class Player : MonoBehaviour, IMovable
 
     public void Move()
     {
-        var verticalSpeed = Input.GetAxis("Vertical");
-        var horizontalSpeed = Input.GetAxis("Horizontal");
+        var verticalSpeed = _buttons.VerticalAxis;
+        var horizontalSpeed = _buttons.HorizontalAxis;
 
         if (verticalSpeed > 0 || verticalSpeed < 0)
         {
