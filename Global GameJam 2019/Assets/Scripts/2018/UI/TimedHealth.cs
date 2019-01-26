@@ -8,6 +8,7 @@ namespace Assets.Scripts._2018.UI
     {
         public void Start()
         {
+            base.Start();
             StartTicking();
         }
 

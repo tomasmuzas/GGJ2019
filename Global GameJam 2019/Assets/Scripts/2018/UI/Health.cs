@@ -1,6 +1,5 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts._2018.UI
 {
@@ -8,8 +7,7 @@ namespace Assets.Scripts._2018.UI
 
     public class Health : MonoBehaviour
     {
-        public GameObject[] HealthSprites;
-        public GameObject HealthPanel;
+        public Slider HealthSlider;
 
         public HealthObjectType Type;
 
@@ -45,15 +43,10 @@ namespace Assets.Scripts._2018.UI
 
         public void Draw()
         {
-            //foreach (Transform child in HealthPanel.transform)
-            //{
-            //    Destroy(child.gameObject);
-            //}
-
-            //for (int i = 0; i < _hp; i++)
-            //{
-            //    Instantiate(HealthSprites[i], HealthPanel.transform);
-            //}
+            if (HealthSlider)
+            {
+                HealthSlider.value = _hp / (float)HpMax;
+            }
         }
 
         public void AddHealth(int amount)
