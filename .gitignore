@@ -3,6 +3,8 @@ Global GameJam 2019/]bj/
 Global GameJam 2019/[Bb]uild/
 Global GameJam 2019/[Bb]uilds/
 Global GameJam 2019/[Ll]ogs/
+Global GameJam 2019/Temp/
+Global GameJam 2019/obj/
 
 # Never ignore Asset meta data
 Global GameJam 2019//![Aa]ssets/**/*.meta
@@ -50,3 +52,36 @@ sysinfo.txt
 crashlytics-build.properties
 
 .DS_Store
+
+# =============== #
+# Unity generated #
+# =============== #
+Global GameJam 2019/Temp/
+Global GameJam 2019/obj/
+Global GameJam 2019/Library/
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
