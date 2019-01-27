@@ -45,7 +45,7 @@ namespace Assets.Scripts._2018.UI
         {
             if (HealthSlider)
             {
-                HealthSlider.value = GetPercentage();
+                HealthSlider.value = GetPercentage() / 100;
             }
         }
 
