@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Buttons : MonoBehaviour
 {
@@ -16,7 +17,12 @@ public class Buttons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Application.platform != RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            VerticalAxis = CrossPlatformInputManager.GetAxis("Vertical");
+            HorizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal");
+        }
+        else
         {
             VerticalAxis = Input.GetAxis("Vertical");
             HorizontalAxis = Input.GetAxis("Horizontal");
