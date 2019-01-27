@@ -43,7 +43,21 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
 
     public void Move()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(direction == Direction.Left ? -Speed : Speed, 0);
+        float xSpeed = 0;
+        float ySpeed = 0;
+
+        if (direction == Direction.Right || direction == Direction.Left)
+        {
+            xSpeed = direction == Direction.Left ? -Speed : Speed;
+            ySpeed = 0;
+        }
+        else
+        {
+            xSpeed = 0;
+            ySpeed = direction == Direction.Bottom ? -Speed : Speed;
+        }
+
+        GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
     }
 
     public void PlaySound()

@@ -16,7 +16,7 @@ namespace Assets.Scripts._2018.UI
             HealthManager = GetComponent<HealthManager>();
         }
 
-        public void OnCollisionEnter2D(Collision2D collision)
+        public void OnTriggerEnter2D(Collider2D collision)
         {
             print("Collision happened");
             if (collision.gameObject.tag == "Projectile")
