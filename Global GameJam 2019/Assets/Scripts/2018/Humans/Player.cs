@@ -71,9 +71,19 @@ public class Player : MonoBehaviour, IMovable
                 Skill skillScript = actualProjectile.GetComponent<Skill>();
                 skillScript.direction = this.direction;
             }
+            RemoveActiveSkill();
             canShoot = false;
             StartCoroutine(ActivateAgain());
         }
+    }
+
+    public void RemoveActiveSkill()
+    {
+        SkillPrefab = null;
+        var powerImage = GameObject.Find("Power1Button").GetComponent<Image>();
+        var tempColor = powerImage.color;
+        tempColor.a = 0;
+        powerImage.color = tempColor;
     }
 
     public IEnumerator ActivateAgain()
@@ -204,6 +214,11 @@ public class Player : MonoBehaviour, IMovable
         tempColor.a = 1;
         powerImage.color = tempColor;
 
+    }
+
+    public bool HasSkill()
+    {
+        return SkillPrefab != null;
     }
 }
 
