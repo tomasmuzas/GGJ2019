@@ -54,6 +54,7 @@ namespace Assets.Scripts._2018.UI
         public void AddHealth(HealthObjectType type, int amount)
         {
             HealthObjects[type].AddHealth(amount);
+            GameObject.Find("Engine").GetComponent<Darkness>().StopDarkening();
         }
 
         public float GetPercentage(HealthObjectType type)

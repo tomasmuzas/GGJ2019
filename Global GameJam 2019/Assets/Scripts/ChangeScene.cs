@@ -22,6 +22,19 @@ public class ChangeScene : MonoBehaviour
             fading = true;
             StartCoroutine(FadeAndLoadScene(FadeDirection.Out));
         }
+
+        if (Input.GetKeyDown("escape"))
+        {
+            if (SceneManager.GetActiveScene().buildIndex > 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                Time.timeScale = 1F;
+            }
+            else
+            {
+                Application.Quit();
+            }
+        }
     }
     void OnEnable()
     {

@@ -45,6 +45,10 @@ public class Pickup : MonoBehaviour
 
             if (GivesSkill)
             {
+                if (player.HasSkill())
+                {
+                    return;
+                }
                 player.GiveSkill(NewSkill);
             }
 
