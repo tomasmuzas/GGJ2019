@@ -38,10 +38,9 @@ namespace Assets.Scripts._2018.UI
 
             var currentPercentage = (int)HealthManager.GetPercentage(HealthObjectType.Health);
 
-            var index =  currentPercentage / (int)percentagePerSprite;
+            var index = currentPercentage / (int)percentagePerSprite;
 
             return index;
-
         }
     }
 }

@@ -174,8 +174,9 @@ public class Player : MonoBehaviour, IMovable
         if (other.gameObject.tag == "Mama")
         {
             // TODO: Animation/sound
-            Destroy(gameObject);
-            GameObject.Find("Main Camera").GetComponent<LevelManager>().GameLose();
+            Destroy(other.gameObject);
+            GameObject.Find("Engine").GetComponent<Darkness>().StartDarkening();
+            //DecreaseHP();
         }
     }
 

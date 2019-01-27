@@ -28,10 +28,12 @@ public class PraeivisMovement : MonoBehaviour
     public bool recalculating = false;
 
     public Direction direction = Direction.Left;
+    public Transform SpawnPoint;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
+        SpawnPoint = gameObject.transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -44,6 +46,17 @@ public class PraeivisMovement : MonoBehaviour
         seeker.StartPath(transform.position, target.position, OnPathComplete);
 
         StartCoroutine(UpdatePath());
+        StartCoroutine(ComeBack());
+    }
+
+    public IEnumerator ComeBack()
+    {
+        var randTime = 3;
+        //Random.Range(randStartTime, randEndTime);
+        yield return new WaitForSeconds(randTime);
+        target = SpawnPoint;
+        // Start new path
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
     }
 
     public void RecalculatePath(Transform newTarget)
@@ -67,7 +80,7 @@ public class PraeivisMovement : MonoBehaviour
         {
             seeker.StartPath(transform.position, target.position, OnPathComplete);
 
-            yield return new WaitForSeconds( 1f/updateRate);
+            yield return new WaitForSeconds(1f / updateRate);
             StartCoroutine(UpdatePath());
         }
     }
@@ -104,7 +117,7 @@ public class PraeivisMovement : MonoBehaviour
         pathIsEnded = false;
 
         Vector3 dir = path.vectorPath[currentWaypoint] - transform.position;
-        dir *= speed *Time.fixedDeltaTime;
+        dir *= speed * Time.fixedDeltaTime;
 
         rb.velocity = dir;
         //rb.AddForce(dir, fMode);
@@ -116,7 +129,7 @@ public class PraeivisMovement : MonoBehaviour
         if (target.transform.position.x > transform.position.x)
         {
             FlipLeft();
-            
+
         }
 
         var dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
