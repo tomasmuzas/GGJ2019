@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462694486524234}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 8.426904}
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,6 +99,8 @@ MonoBehaviour:
   PowerUp: {fileID: 0}
   SkillPrefab: {fileID: 1450243771525818, guid: 1fa454b4a583e0a42b88347e0e4747f2,
     type: 3}
+  DownSprite: {fileID: 0}
+  SideSprite: {fileID: 0}
   _speed: 3
   Mama: {fileID: 0}
   canShoot: 1
