@@ -13,19 +13,15 @@ public class PowerUp : MonoBehaviour, IDamageDealer
     public int durationInSeconds;
     public int tickSpeed;
 
+    public HealthObjectType type;
+
+    public Coroutine coroutine;
+
 
     [SerializeField]
     private double _damage;
 
-    private ParticleSystem particles;
     public double Damage { get { return _damage; } private set { _damage = value; } }
-
-    void Start()
-    {
-        particles = GetComponentInChildren<ParticleSystem>();
-        var emision = particles.emission;
-        emision.enabled = false;
-    }
 
     // Activate main effect after the player touches the powerup
     void OnTriggerEnter2D(Collider2D collision)
@@ -36,8 +32,7 @@ public class PowerUp : MonoBehaviour, IDamageDealer
             Activate();
         }
     }
-
-
+    
     // Deal damage to pedestrians after
     void OnTriggerStay2D(Collider2D collision)
     {
@@ -45,8 +40,13 @@ public class PowerUp : MonoBehaviour, IDamageDealer
         {
             Player player = collision.gameObject.GetComponent<Player>();
             //Damamge
-            StartCoroutine(ExecuteAfter(tickSpeed, () => player._healthManager.AddHealth(HealthObjectType.Food, 1)));
+            coroutine = StartCoroutine(ExecuteAfter(tickSpeed, () => player._healthManager.AddHealth(type, 1)));
         }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        StopCoroutine(coroutine);
     }
 
     void IncreaseColliderRadius()
@@ -58,8 +58,6 @@ public class PowerUp : MonoBehaviour, IDamageDealer
     // Call all the main effects
     void Activate()
     {
-        var emision = particles.emission;
-        emision.enabled = true;
         PlaySound();
         IncreaseColliderRadius();
         StartDisapperCountdown();
