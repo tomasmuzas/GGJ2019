@@ -4,7 +4,7 @@
     {
         Health,
         Food,
-        Heat,
+        Temperature,
         Alcohol
     }
 }

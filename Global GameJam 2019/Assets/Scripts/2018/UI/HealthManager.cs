@@ -40,6 +40,9 @@ namespace Assets.Scripts._2018.UI
                     case HealthObjectType.Alcohol:
                         obj.HealthSlider = GameObject.Find("Alcohol Health Bar").GetComponentInChildren<Slider>();
                         break;
+                    case HealthObjectType.Temperature:
+                        obj.HealthSlider = GameObject.Find("Temperature Health Bar").GetComponentInChildren<Slider>();
+                        break;
                 }
 
                 HealthObjects.Add(healthObject.Type, obj);
