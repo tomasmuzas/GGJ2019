@@ -52,6 +52,10 @@ public class Darkness : MonoBehaviour
     void IncreaseDarkness(float delta)
     {
         CurrentDarkness = CurrentDarkness + delta * DarknessSpeed;
+        if (CurrentDarkness > 0.99)
+        {
+            GameObject.Find("Engine").GetComponent<GameOverWin>().GameLose();
+        }
         SetDarkness();
     }
 
