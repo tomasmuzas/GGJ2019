@@ -21,6 +21,8 @@ public class Player : MonoBehaviour, IMovable
     public Sprite DownSprite;
     public Sprite SideSprite;
 
+    public Sprite UpSprite;
+
     public Buttons _buttons { get; set; }
 
 
@@ -150,7 +152,7 @@ public class Player : MonoBehaviour, IMovable
     private void FlipTop()
     {
         direction = Direction.Top;
-        GetComponent<SpriteRenderer>().sprite = DownSprite;
+        GetComponent<SpriteRenderer>().sprite = UpSprite;
         GetComponent<SpriteRenderer>().flipY = false;
     }
 
