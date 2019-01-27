@@ -35,7 +35,7 @@ public class Pickup : MonoBehaviour
 
             if (GivesShotgun)
             {
-                player.GiveShotgun();
+                //player.GiveShotgun();
             }
 
             if (GivesTime)

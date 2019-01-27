@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 
 using Assets.Scripts._2018.UI;
 
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public enum Direction
 {
-    Left, Right
+    Left, Right, Top, Bottom
 }
 
 [RequireComponent(typeof(Animator))]
@@ -34,7 +35,6 @@ public class Player : MonoBehaviour, IMovable
     private Animator animator;
 
     public GameObject Mama = null;
-    private bool shotgun;
 
     public bool canShoot = true;
     public float activeTime = 0.025f;
@@ -43,34 +43,11 @@ public class Player : MonoBehaviour, IMovable
     {
         if (SkillPrefab != null && canShoot)
         {
-            if (shotgun)
-            {
-                var spread = 0.25f;
-                // Middle
-                GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
-                Skill skillScript = actualProjectile.GetComponent<Skill>();
-                skillScript.direction = this.direction;
 
-                // Top
-                var upPosition = transform.position;
-                upPosition.y += spread;
-                actualProjectile = Instantiate(SkillPrefab, upPosition, transform.rotation);
-                skillScript = actualProjectile.GetComponent<Skill>();
-                skillScript.direction = this.direction;
+            GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
+            Skill skillScript = actualProjectile.GetComponent<Skill>();
+            skillScript.direction = this.direction;
 
-                // Bottom
-                var bottomPosition = transform.position;
-                bottomPosition.y -= spread;
-                actualProjectile = Instantiate(SkillPrefab, bottomPosition, transform.rotation);
-                skillScript = actualProjectile.GetComponent<Skill>();
-                skillScript.direction = this.direction;
-            }
-            else
-            {
-                GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
-                Skill skillScript = actualProjectile.GetComponent<Skill>();
-                skillScript.direction = this.direction;
-            }
             RemoveActiveSkill();
             canShoot = false;
             StartCoroutine(ActivateAgain());
@@ -121,43 +98,45 @@ public class Player : MonoBehaviour, IMovable
     {
         var verticalSpeed = _buttons.VerticalAxis;
         var horizontalSpeed = _buttons.HorizontalAxis;
+
         if (verticalSpeed == 0)
         {
             // TODO: animator.SetBool("Walking", false);
         }
 
-        if (horizontalSpeed > 0)
+        if (Math.Abs(horizontalSpeed) > Math.Abs(verticalSpeed) && horizontalSpeed > 0)
         {
             GetComponent<SpriteRenderer>().sprite = SideSprite;
             // TODO: animator.SetBool("Walking", true);
             FlipRight();
         }
-        if (horizontalSpeed < 0)
+
+        if (Math.Abs(horizontalSpeed) > Math.Abs(verticalSpeed) && horizontalSpeed < 0)
         {
             GetComponent<SpriteRenderer>().sprite = SideSprite;
             // TODO: animator.SetBool("Walking", true);
             FlipLeft();
         }
-        if (horizontalSpeed == 0)
-        {
-            // TODO: animator.SetBool("Walking", false);
-        }
-        if (horizontalSpeed == 0 && verticalSpeed > 0)
+
+        if (Math.Abs(horizontalSpeed) < Math.Abs(verticalSpeed) && verticalSpeed > 0)
         {
             FlipTop();
             // TODO: animator.SetBool("Walking", true);
         }
-        if (horizontalSpeed == 0 && verticalSpeed < 0)
+
+        if (Math.Abs(horizontalSpeed) < Math.Abs(verticalSpeed) && verticalSpeed < 0)
         {
-            FlipBot();
+            FlipBottom();
             // TODO: animator.SetBool("Walking", true);
         }
+
         rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
     }
 
     private void FlipLeft()
     {
         direction = Direction.Left;
+        GetComponent<SpriteRenderer>().flipY = false;
         GetComponent<SpriteRenderer>().flipX = true;
     }
 
@@ -165,18 +144,21 @@ public class Player : MonoBehaviour, IMovable
     {
         direction = Direction.Right;
         GetComponent<SpriteRenderer>().flipX = false;
+        GetComponent<SpriteRenderer>().flipY = false;
     }
 
     private void FlipTop()
     {
-        direction = Direction.Right;
+        direction = Direction.Top;
         GetComponent<SpriteRenderer>().sprite = DownSprite;
+        GetComponent<SpriteRenderer>().flipY = false;
     }
 
-    private void FlipBot()
+    private void FlipBottom()
     {
-        direction = Direction.Right;
+        direction = Direction.Bottom;
         GetComponent<SpriteRenderer>().sprite = DownSprite;
+        GetComponent<SpriteRenderer>().flipY = false;
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -200,10 +182,6 @@ public class Player : MonoBehaviour, IMovable
         _healthManager.AddHealth(HealthObjectType.Health, 1);
     }
 
-    public void GiveShotgun()
-    {
-        shotgun = true;
-    }
 
     public void GiveSkill(GameObject newSkill)
     {
