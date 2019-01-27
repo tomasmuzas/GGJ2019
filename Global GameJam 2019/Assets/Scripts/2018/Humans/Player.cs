@@ -17,6 +17,8 @@ public class Player : MonoBehaviour, IMovable
     public Direction direction;
     public GameObject PowerUp;
     public GameObject SkillPrefab;
+    public Sprite DownSprite;
+    public Sprite SideSprite;
 
     public Buttons _buttons { get; set; }
 
@@ -109,11 +111,6 @@ public class Player : MonoBehaviour, IMovable
     {
         var verticalSpeed = _buttons.VerticalAxis;
         var horizontalSpeed = _buttons.HorizontalAxis;
-
-        if (verticalSpeed > 0 || verticalSpeed < 0)
-        {
-            // TODO: animator.SetBool("Walking", true);
-        }
         if (verticalSpeed == 0)
         {
             // TODO: animator.SetBool("Walking", false);
@@ -121,11 +118,13 @@ public class Player : MonoBehaviour, IMovable
 
         if (horizontalSpeed > 0)
         {
+            GetComponent<SpriteRenderer>().sprite = SideSprite;
             // TODO: animator.SetBool("Walking", true);
             FlipRight();
         }
         if (horizontalSpeed < 0)
         {
+            GetComponent<SpriteRenderer>().sprite = SideSprite;
             // TODO: animator.SetBool("Walking", true);
             FlipLeft();
         }
@@ -133,19 +132,41 @@ public class Player : MonoBehaviour, IMovable
         {
             // TODO: animator.SetBool("Walking", false);
         }
+        if (horizontalSpeed == 0 && verticalSpeed > 0)
+        {
+            FlipTop();
+            // TODO: animator.SetBool("Walking", true);
+        }
+        if (horizontalSpeed == 0 && verticalSpeed < 0)
+        {
+            FlipBot();
+            // TODO: animator.SetBool("Walking", true);
+        }
         rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
     }
 
     private void FlipLeft()
     {
         direction = Direction.Left;
-        GetComponent<SpriteRenderer>().flipX = false;
+        GetComponent<SpriteRenderer>().flipX = true;
     }
 
     private void FlipRight()
     {
         direction = Direction.Right;
-        GetComponent<SpriteRenderer>().flipX = true;
+        GetComponent<SpriteRenderer>().flipX = false;
+    }
+
+    private void FlipTop()
+    {
+        direction = Direction.Right;
+        GetComponent<SpriteRenderer>().sprite = DownSprite;
+    }
+
+    private void FlipBot()
+    {
+        direction = Direction.Right;
+        GetComponent<SpriteRenderer>().sprite = DownSprite;
     }
 
     void OnCollisionEnter2D(Collision2D other)
