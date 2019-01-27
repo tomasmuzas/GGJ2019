@@ -29,7 +29,7 @@ namespace Assets.Scripts._2018.UI
             foreach (var healthObject in HealthItems)
             {
                 var obj = Instantiate(healthObject);
-                obj.OnHealthDrained += HealthDrainedStrategy.HealthDrained;
+                obj.OnHealthDrained += () => HealthDrainedStrategy.HealthDrained(this);
 
                 // Damn that's terrible, I'm sorry:D
                 switch (obj.Type)

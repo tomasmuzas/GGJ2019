@@ -2,9 +2,9 @@
 {
     public class DestroyStrategy : HealthDrainedStrategy
     {
-        public override void HealthDrained()
+        public override void HealthDrained(HealthManager manager)
         {
-
+            Destroy(manager.transform.parent.gameObject);
         }
     }
 }
