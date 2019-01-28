@@ -132,6 +132,23 @@ public class Player : MonoBehaviour, IMovable
             // TODO: animator.SetBool("Walking", true);
         }
 
+        if (horizontalSpeed > 0 || verticalSpeed > 0)
+        {
+            var footsteps = gameObject.transform.Find("Footsteps").GetComponent<AudioSource>();
+            if (!footsteps.isPlaying)
+            {
+                footsteps.GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            var footsteps = gameObject.transform.Find("Footsteps").GetComponent<AudioSource>();
+            if (footsteps.isPlaying)
+            {
+                footsteps.GetComponent<AudioSource>().Stop();
+            }
+        }
+
         rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
     }
 
@@ -187,6 +204,7 @@ public class Player : MonoBehaviour, IMovable
 
     public void GiveSkill(GameObject newSkill)
     {
+        gameObject.GetComponent<AudioSource>().Play();
         SkillPrefab = newSkill;
         var powerImage = GameObject.Find("Power1Button").GetComponent<Image>();
         powerImage.sprite = newSkill.GetComponent<Skill>().UISprite;

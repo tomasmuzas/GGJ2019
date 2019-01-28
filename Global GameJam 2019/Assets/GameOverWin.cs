@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameOverWin : MonoBehaviour
 {
     public GameObject GameOver;
+    public GameObject WinScreen;
+
     public GameObject Pause;
 
     // Start is called before the first frame update
@@ -15,6 +17,8 @@ public class GameOverWin : MonoBehaviour
         GameOver.gameObject.SetActive(false);
         Pause = GameObject.Find("Pause");
         Pause.gameObject.SetActive(false);
+        WinScreen = GameObject.Find("GameWin");
+        WinScreen.gameObject.SetActive(false);
     }
 
     void Update()
@@ -34,10 +38,21 @@ public class GameOverWin : MonoBehaviour
         //     PlayerPrefs.SetInt("highscore", score);
         // }
         // PlayGames.AddScoreToLeaderBoard(GPGSIds.leaderboard_score, score);
-        Time.timeScale = 0.0F;
+        //Time.timeScale = 0.0F;
+        var allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        foreach (var audioS in allAudioSources)
+        {
+            audioS.Stop();
+        }
         GameOver.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         GameOver.gameObject.SetActive(true);
-        GetComponent<AudioSource>().Play();
+        GameOver.GetComponent<AudioSource>().Play();
+    }
+
+    public void GameWin()
+    {
+        WinScreen.gameObject.SetActive(true);
+        WinScreen.GetComponent<AudioSource>().Play();
     }
 
     public void GamePause()
@@ -50,7 +65,7 @@ public class GameOverWin : MonoBehaviour
         Time.timeScale = 0.0F;
         Pause.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         Pause.gameObject.SetActive(true);
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().Play();
     }
 
     public void GameUnPause()

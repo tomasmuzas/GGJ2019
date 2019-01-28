@@ -21,8 +21,13 @@ namespace Assets.Scripts._2018.UI
             print("Collision happened");
             if (collision.gameObject.tag == "Projectile")
             {
-                HealthManager.DealDamage(HealthObjectType.Health, 1);
-                GetComponent<SpriteRenderer>().sprite = States[GetCurrentSprite()];
+                var dmg = collision.GetComponent<Skill>().Damage;
+                HealthManager.DealDamage(HealthObjectType.Health, (int)dmg);
+                var currentSprite = GetCurrentSprite();
+                if (currentSprite < States.Length)
+                {
+                    GetComponent<SpriteRenderer>().sprite = States[currentSprite];
+                }
                 Destroy(collision.gameObject);
             }
         }
@@ -39,7 +44,6 @@ namespace Assets.Scripts._2018.UI
             var currentPercentage = (int)HealthManager.GetPercentage(HealthObjectType.Health);
 
             var index = currentPercentage / (int)percentagePerSprite;
-
             return index;
         }
     }
