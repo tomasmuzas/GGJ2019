@@ -39,18 +39,19 @@ public class GameOverWin : MonoBehaviour
         // }
         // PlayGames.AddScoreToLeaderBoard(GPGSIds.leaderboard_score, score);
         //Time.timeScale = 0.0F;
-        var allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-        foreach (var audioS in allAudioSources)
-        {
-            audioS.Stop();
-        }
+        // var allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        // foreach (var audioS in allAudioSources)
+        // {
+        //     audioS.Stop();
+        // }
+        gameObject.GetComponent<AudioSource>().Stop();
         GameOver.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         GameOver.gameObject.SetActive(true);
-        GameOver.GetComponent<AudioSource>().Play();
     }
 
     public void GameWin()
     {
+        gameObject.GetComponent<AudioSource>().Stop();
         WinScreen.gameObject.SetActive(true);
         WinScreen.GetComponent<AudioSource>().Play();
     }
