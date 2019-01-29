@@ -15,7 +15,7 @@ public enum Direction
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour, IMovable
 {
-    public Direction direction;
+    public Vector2 lastVelocity;
     public GameObject PowerUp;
     public GameObject SkillPrefab;
     public Sprite DownSprite;
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IMovable
 
             GameObject actualProjectile = Instantiate(SkillPrefab, transform.position, transform.rotation);
             Skill skillScript = actualProjectile.GetComponent<Skill>();
-            skillScript.direction = this.direction;
+            skillScript.direction = lastVelocity;
 
             RemoveActiveSkill();
             canShoot = false;
@@ -132,15 +132,7 @@ public class Player : MonoBehaviour, IMovable
             // TODO: animator.SetBool("Walking", true);
         }
 
-        if (horizontalSpeed > 0 || verticalSpeed > 0)
-        {
-            var footsteps = gameObject.transform.Find("Footsteps").GetComponent<AudioSource>();
-            if (!footsteps.isPlaying)
-            {
-                footsteps.GetComponent<AudioSource>().Play();
-            }
-        }
-        else
+        if (horizontalSpeed == 0 && verticalSpeed == 0)
         {
             var footsteps = gameObject.transform.Find("Footsteps").GetComponent<AudioSource>();
             if (footsteps.isPlaying)
@@ -148,34 +140,41 @@ public class Player : MonoBehaviour, IMovable
                 footsteps.GetComponent<AudioSource>().Stop();
             }
         }
-
+        else
+        {
+            var footsteps = gameObject.transform.Find("Footsteps").GetComponent<AudioSource>();
+            if (!footsteps.isPlaying)
+            {
+                footsteps.GetComponent<AudioSource>().Play();
+            }
+        }
+        if ((horizontalSpeed > 0.1 || horizontalSpeed < -0.1) && (verticalSpeed > 0.1 || verticalSpeed < -0.1))
+        {
+            lastVelocity = new Vector2(horizontalSpeed, verticalSpeed);
+        }
         rigidbody.velocity = new Vector2(horizontalSpeed * Speed, verticalSpeed * Speed);
     }
 
     private void FlipLeft()
     {
-        direction = Direction.Left;
         GetComponent<SpriteRenderer>().flipY = false;
         GetComponent<SpriteRenderer>().flipX = true;
     }
 
     private void FlipRight()
     {
-        direction = Direction.Right;
         GetComponent<SpriteRenderer>().flipX = false;
         GetComponent<SpriteRenderer>().flipY = false;
     }
 
     private void FlipTop()
     {
-        direction = Direction.Top;
         GetComponent<SpriteRenderer>().sprite = UpSprite;
         GetComponent<SpriteRenderer>().flipY = false;
     }
 
     private void FlipBottom()
     {
-        direction = Direction.Bottom;
         GetComponent<SpriteRenderer>().sprite = DownSprite;
         GetComponent<SpriteRenderer>().flipY = false;
     }

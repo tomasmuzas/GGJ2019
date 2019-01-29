@@ -8,10 +8,10 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
 {
     public Sprite UISprite;
     public Sprite ShootingSprite;
-    public Direction direction;
+    public Vector2 direction;
     [SerializeField]
     private double _damage;
-    public double Damage { get { return _damage; } private set { _damage = value; }}
+    public double Damage { get { return _damage; } private set { _damage = value; } }
     [SerializeField]
     private float _speed;
     public float Speed { get { return _speed; } private set { _speed = value; } }
@@ -22,6 +22,9 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
     {
         GetComponent<SpriteRenderer>().sprite = ShootingSprite;
         PlaySound();
+
+        Debug.Log("x" + direction.x);
+        Debug.Log("y" + direction.y);
         BeginDestruction();
     }
 
@@ -46,15 +49,21 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
         float xSpeed = 0;
         float ySpeed = 0;
 
-        if (direction == Direction.Right || direction == Direction.Left)
+        if (direction.x > 0)
         {
-            xSpeed = direction == Direction.Left ? -Speed : Speed;
-            ySpeed = 0;
+            xSpeed = direction.x + Speed;
         }
-        else
+        if (direction.x < 0)
         {
-            xSpeed = 0;
-            ySpeed = direction == Direction.Bottom ? -Speed : Speed;
+            xSpeed = direction.x - Speed;
+        }
+        if (direction.y > 0)
+        {
+            ySpeed = direction.y + Speed;
+        }
+        if (direction.y < 0)
+        {
+            ySpeed = direction.y - Speed;
         }
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
