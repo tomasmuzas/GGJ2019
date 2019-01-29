@@ -46,6 +46,6 @@ MonoBehaviour:
   HealthSlider: {fileID: 0}
   Type: 3
   _hp: 0
-  _hpMax: 40
+  _hpMax: 80
   _tickIntervalInSeconds: 1
   _damagePerSecond: 1
