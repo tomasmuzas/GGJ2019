@@ -23,8 +23,6 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
         GetComponent<SpriteRenderer>().sprite = ShootingSprite;
         PlaySound();
 
-        Debug.Log("x" + direction.x);
-        Debug.Log("y" + direction.y);
         BeginDestruction();
     }
 
@@ -51,19 +49,35 @@ public class Skill : MonoBehaviour, IDamageDealer, IMovable
 
         if (direction.x > 0)
         {
-            xSpeed = direction.x + Speed;
+            xSpeed = direction.x * Speed;
         }
         if (direction.x < 0)
         {
-            xSpeed = direction.x - Speed;
+            xSpeed = direction.x * Speed;
         }
         if (direction.y > 0)
         {
-            ySpeed = direction.y + Speed;
+            ySpeed = direction.y * Speed;
         }
         if (direction.y < 0)
         {
-            ySpeed = direction.y - Speed;
+            ySpeed = direction.y * Speed;
+        }
+        if (xSpeed < Speed * 0.8 && ySpeed < Speed * 0.8)
+        {
+            float diff;
+            if (xSpeed > ySpeed)
+            {
+                diff = Speed - xSpeed;
+                xSpeed = xSpeed + xSpeed * diff;
+                ySpeed = ySpeed + ySpeed * diff;
+            }
+            else
+            {
+                diff = Speed - ySpeed;
+                xSpeed = xSpeed + xSpeed * diff;
+                ySpeed = ySpeed + ySpeed * diff;
+            }
         }
 
         GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
