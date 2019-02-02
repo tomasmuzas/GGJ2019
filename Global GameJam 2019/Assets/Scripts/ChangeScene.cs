@@ -43,6 +43,7 @@ public class ChangeScene : MonoBehaviour
     }
     public void Skip()
     {
+        fadeOutUIImage.enabled = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     #endregion
